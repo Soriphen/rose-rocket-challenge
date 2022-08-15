@@ -17,6 +17,15 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.15.0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/lab": "^5.0.0-alpha.94",
+    "@mui/material": "^5.10.0",
+    "@mui/system": "^5.10.0",
+    "@mui/x-date-pickers": "^5.0.0-beta.5",
+    "@styled-icons/boxicons-regular": "^10.38.0",
+    "date-fns": "^2.29.1",
     "expo": "^44.0.0",
     "expo-status-bar": "~1.2.0",
     "native-base": "3.4.0",
