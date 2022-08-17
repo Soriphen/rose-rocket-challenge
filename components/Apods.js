@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Flex, Image } from "native-base";
-import DateRange from "./DateRange";
+import { Box, Center, Flex, HStack, Image, Text } from "native-base";
+import { WebView } from "react-native-webview";
 
 const Apod = ({ ...rest }) => {
   const handleClick = () => {
@@ -17,34 +17,29 @@ const Apod = ({ ...rest }) => {
   };
 
   return (
-    <Flex apodIdx={rest.index}>
-      {rest.media_type === "image" ? (
-        <Image
-          src={rest.imgURL}
-          alt={rest.title}
-          style={{ width: "100%", margin: "0 auto" }}
-        />
-      ) : rest.media_type === "video" ? // <iframe
-      //   src={rest.imgURL}
-      //   title={rest.title}
-      //   width="100%"
-      //   height="400vw"
-      //   frameBorder="0"
-      //   allowFullScreen
-      // ></iframe>
-      null : null}
-      <Box m={"20px"} textAlign={"left"}>
-        <Box fontSize={"24px"} my={"5px"}>
-          {rest.title}
-        </Box>
-        <Box fontSize={"16px"} fontWeight={300}>
-          {rest.date}
-        </Box>
-        {/* <HeartStyled
+    <Flex borderWidth={1} apodIdx={rest.index}>
+      {
+        rest.media_type === "image" ? (
+          <Image src={rest.imgURL} alt={rest.title} size={"lg"} />
+        ) : rest.media_type === "video" ? (
+          <WebView
+            originWhitelist={["*"]}
+            scalesPageToFit={false}
+            bounces={false}
+            javaScriptEnabled
+            style={{ height: 96, width: 96 }}
+            source={{
+              html: `<iframe src=${rest.imgURL} title=${rest.title}  />`,
+            }}
+          />
+        ) : null // ></iframe> //   allowFullScreen //   frameBorder="0" //   height="400vw" //   width="100%" //   title={rest.title} //   src={rest.imgURL} // <iframe
+      }
+      {/* <Text>{rest.title}</Text> */}
+      {/* <Text>{rest.date}</Text> */}
+      {/* <HeartStyled
           liked={rest.dateLikesRef[rest.date]["liked"]}
           onClick={() => handleClick()}
         /> */}
-      </Box>
     </Flex>
   );
 };
@@ -59,21 +54,27 @@ export default function Apods({
 }) {
   return (
     <Box>
-      <DateRange enteredDate={enteredDate} setEnteredDate={setEnteredDate} />
-      {apods.length !== 0 &&
-        apods.map((apod, index) => (
-          <Apod
-            key={index}
-            date={apod.date}
-            imgURL={apod.url}
-            title={apod.title}
-            media_type={apod.media_type}
-            dateLikesRef={dateLikesRef}
-            dateLikes={dateLikes}
-            setDateLikes={setDateLikes}
-            index={index}
-          />
-        ))}
+      <HStack
+        justifyContent={"center"}
+        flexWrap={"wrap"}
+        borderWidth={1}
+        space={2}
+      >
+        {apods.length !== 0 &&
+          apods.map((apod, index) => (
+            <Apod
+              key={index}
+              date={apod.date}
+              imgURL={apod.url}
+              title={apod.title}
+              media_type={apod.media_type}
+              dateLikesRef={dateLikesRef}
+              dateLikes={dateLikes}
+              setDateLikes={setDateLikes}
+              index={index}
+            />
+          ))}
+      </HStack>
     </Box>
   );
 }
