@@ -24,6 +24,8 @@
     "@mui/material": "^5.10.0",
     "@mui/system": "^5.10.0",
     "@mui/x-date-pickers": "^5.0.0-beta.5",
+    "@react-navigation/native": "^6.0.11",
+    "@react-navigation/native-stack": "^6.7.0",
     "@styled-icons/boxicons-regular": "^10.38.0",
     "date-fns": "^2.29.1",
     "expo": "^44.0.0",
@@ -36,7 +38,8 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-svg": "12.1.1",
     "react-native-web": "0.17.1",
-    "react-native-webview": "^11.23.0"
+    "react-native-webview": "^11.23.0",
+    "react-native-screens": "~3.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

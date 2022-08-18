@@ -1,15 +1,15 @@
 import React from "react";
 import DatePicker from "react-native-datepicker";
-import { Flex, Box, Button } from "native-base";
+import { Flex, Button } from "native-base";
 
 export default function DateRange({
   enteredDate,
   setEnteredDate,
-  apods,
   setApods,
   setError,
 }) {
   const maxDate = new Date().toISOString().match(/[\d-]+/)[0];
+
   const fetchApod = async () => {
     const apodsAPIURL = `https://api.nasa.gov/planetary/apod?api_key=SqFFo6cwJlXTax6FWe2m1nB5TXGiN3LdkQku2hw4&start_date=${enteredDate[0]}&end_date=${enteredDate[1]}`;
 
@@ -25,30 +25,21 @@ export default function DateRange({
       if (!response.ok) {
         const error = (data && data.msg) || response.status;
         setError(error);
-        return Promise.reject(error);
+        await Promise.reject(error);
+      } else {
+        setError(null);
       }
 
-      // data.forEach((apod) => {
-      //   if (!dateLikesRef.current.hasOwnProperty(apod.date)) {
-      //     dateLikesRef.current[apod.date] = { liked: false };
-      //   }
-      // });
-
       setApods(data);
-      // setIsLoaded(true);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // React.useEffect(() => {
-  //   console.log(enteredDate);
-  // }, [enteredDate, setEnteredDate]);
-
   return (
     <Flex justify={"space-between"}>
       <DatePicker
-        style={{ width: "100%" }}
+        style={{ width: "100%", marginBottom: 10 }}
         date={enteredDate[0]}
         mode="date"
         placeholder="Start Date"
@@ -65,7 +56,7 @@ export default function DateRange({
         }}
       />
       <DatePicker
-        style={{ width: "100%" }}
+        style={{ width: "100%", marginBottom: 10 }}
         date={enteredDate[1]}
         mode="date"
         maxDate={maxDate}
@@ -73,7 +64,7 @@ export default function DateRange({
         format="YYYY-MM-DD"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
-        customStyles={{}}
+        customStyles={{ borderRadius: 5 }}
         showIcon={false}
         onDateChange={(date) => {
           const enteredDateCopy = [...enteredDate];
@@ -81,7 +72,9 @@ export default function DateRange({
           setEnteredDate(enteredDateCopy);
         }}
       />
-      <Button onPress={() => fetchApod()}>Search</Button>
+      <Button mb={7} onPress={() => fetchApod()}>
+        Search
+      </Button>
     </Flex>
   );
 }
